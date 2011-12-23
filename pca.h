@@ -39,7 +39,7 @@ public:
       -1 if there were some errors
   */
   int Calculate(std::vector<float>& x, const unsigned int& nrows, const unsigned int& ncols, 
-          const bool is_corr = false, const bool is_center = true, const bool is_scale = true);
+          const bool is_corr = true, const bool is_center = true, const bool is_scale = true);
   //! Return number of rows in initial matrix
   /*!
     \result Number of rows in initial matrix
