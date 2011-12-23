@@ -98,7 +98,8 @@ int Pca::Calculate(vector<float> &x,
     tmp_vec /= tmp_sum;
     // PC's standard deviation and
     // PC's proportion of variance
-    for (unsigned int i = 0; i < _ncols; ++i) {
+    unsigned int lim = (_nrows < _ncols)? _nrows : _ncols;
+    for (unsigned int i = 0; i < lim; ++i) {
       _sd.push_back(eigen_singular_values(i)/sqrt(denom));
       if (_sd[i] >= 1) {
         _kaiser = i + 1;
@@ -129,9 +130,9 @@ int Pca::Calculate(vector<float> &x,
     #ifdef DEBUG
       cout << "\n\nRotated values (scores):\n" << eigen_scores;
     #endif
-    _scores.reserve(_ncols*_nrows);
-    for (unsigned int i = 0; i < _nrows; ++i) {
-      for (unsigned int j = 0; j < _ncols; ++j) {
+    _scores.reserve(lim*lim);
+    for (unsigned int i = 0; i < lim; ++i) {
+      for (unsigned int j = 0; j < lim; ++j) {
         _scores.push_back(eigen_scores(i, j));
       }
     }
