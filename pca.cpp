@@ -23,6 +23,9 @@ int Pca::Calculate(vector<float> &x,
   if (x.size()!= _nrows*_ncols) {
     return -1;
   }
+  if ((1 == _ncols) || (1 == nrows)) {
+    return -1;
+  }
   // Convert vector to Eigen 2-dimensional matrix
   //Map<MatrixXf> _xXf(x.data(), _nrows, _ncols);
   _xXf.resize(_nrows, _ncols);
@@ -75,7 +78,7 @@ int Pca::Calculate(vector<float> &x,
     }
   }
   // Scale to unit variance
-  if ( (false == _is_corr) && (true == _is_scale)) {
+  if ( (false == _is_corr) || (true == _is_scale)) {
     for (unsigned int i = 0; i < _ncols; ++i) {
      _xXf.col(i) /= sqrt(_xXf.col(i).array().square().sum()/denom);
     }
@@ -98,6 +101,7 @@ int Pca::Calculate(vector<float> &x,
     tmp_vec /= tmp_sum;
     // PC's standard deviation and
     // PC's proportion of variance
+    _kaiser = 0;
     unsigned int lim = (_nrows < _ncols)? _nrows : _ncols;
     for (unsigned int i = 0; i < lim; ++i) {
       _sd.push_back(eigen_singular_values(i)/sqrt(denom));
@@ -113,7 +117,8 @@ int Pca::Calculate(vector<float> &x,
     #endif
     tmp_vec.resize(0);
     // PC's cumulative proportion
-    _cum_prop.push_back(_prop_of_var[0]);
+    _thresh95 = 1;
+    _cum_prop.push_back(_prop_of_var[0]); 
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
       if (_cum_prop[i] < 0.95) {
@@ -208,7 +213,7 @@ int Pca::Calculate(vector<float> &x,
       cout << "\nKaiser criterion: PC #" << _kaiser << endl;
     #endif
     // PC's cumulative proportion
-    _cum_prop.clear(); _thresh95 = 0;
+    _cum_prop.clear(); _thresh95 = 1;
     _cum_prop.push_back(_prop_of_var[0]);
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
@@ -271,7 +276,7 @@ Pca::Pca(void) {
   _is_corr  = false;
 
   _kaiser   = 0;
-  _thresh95 = 0;
+  _thresh95 = 1;
 }
 Pca::~Pca(void) { 
   _xXf.resize(0, 0);
