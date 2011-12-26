@@ -152,10 +152,10 @@ int DoPCA(vector<float> &vec,
 
 int main() {
   long long curr_time;
-  
+  vector<float> vec;
   // 1 number
   cout << "::: Tests\\01-in.txt: 1 number :::" << endl;
-  vector<float> vec = ReadNumbersToVector("Tests\\01-in.txt");
+  vec = ReadNumbersToVector("Tests\\01-in.txt");
   curr_time = GetTimeMs64(); 
   DoPCA(vec, 1, 1, "Tests\\01-out-01.txt");
   cout << "\t 1x1, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
@@ -262,8 +262,8 @@ int main() {
   DoPCA(vec, 250, 40, "Tests\\07-out-03.txt");
   cout << "\t 250x40, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
   curr_time = GetTimeMs64();
-  DoPCA(vec, 125, 8, "Tests\\07-out-04.txt");
-  cout << "\t 125x8, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
+  DoPCA(vec, 125, 80, "Tests\\07-out-04.txt");
+  cout << "\t 125x80, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
 
   // 100000 numbers
   cout << endl << "::: Tests\\08-in.txt: 10^5 numbers :::" << endl;
