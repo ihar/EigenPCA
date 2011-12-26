@@ -137,8 +137,12 @@ int DoPCA(vector<float> &vec,
   outfile << "\n\n95% threshold criterion: " << thresh95 << endl;
 
   outfile << "\n\nRotated data: " << endl;
-  unsigned int row_lim = (nrows < ncols)? nrows : ncols,
-               col_lim = (ncols < nrows)? ncols : nrows;
+  unsigned int row_lim = nrows,
+               col_lim = ncols;
+  if (scores.size() != nrows * ncols) {
+    row_lim = (nrows < ncols)? nrows : ncols,
+    col_lim = (ncols < nrows)? ncols : nrows;
+  }
   for (unsigned int i = 0; i < row_lim; ++i) {
     for (unsigned int j = 0; j < col_lim; ++j) {
       outfile << setw(13) << scores[j + col_lim*i];
@@ -153,6 +157,7 @@ int DoPCA(vector<float> &vec,
 int main() {
   long long curr_time;
   vector<float> vec;
+
   // 1 number
   cout << "::: Tests\\01-in.txt: 1 number :::" << endl;
   vec = ReadNumbersToVector("Tests\\01-in.txt");
@@ -179,7 +184,7 @@ int main() {
   DoPCA(vec, 5, 12, "Tests\\02-out-02.txt");
   cout << "\t 5x12, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
   curr_time = GetTimeMs64();
-  DoPCA(vec, 10, 60, "Tests\\02-out-03.txt");
+  DoPCA(vec, 10, 6, "Tests\\02-out-03.txt");
   cout << "\t 10x6, time (ms): " << double( GetTimeMs64()- curr_time ) << endl;
   curr_time = GetTimeMs64();
   DoPCA(vec, 60, 1, "Tests\\02-out-04.txt");
