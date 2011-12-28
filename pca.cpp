@@ -260,7 +260,7 @@ std::vector<float> Pca::scores(void) { return _scores; };
 std::vector<unsigned int> Pca::eliminated_columns(void) { return _eliminated_columns; }
 string Pca::method(void) { return _method; }
 unsigned int Pca::kaiser(void) { return _kaiser; };
-unsigned int Pca::thesh95(void) { return _thresh95; };
+unsigned int Pca::thresh95(void) { return _thresh95; };
 unsigned int Pca::ncols(void) { return _ncols; }
 unsigned int Pca::nrows(void) { return _nrows; }
 bool Pca::is_scale(void) {  return _is_scale; }

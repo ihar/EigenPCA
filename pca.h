@@ -109,7 +109,7 @@ public:
     Retain only PC which cumulative proportion is less than 0.95
     \result Number of PCs should be retain with the 95% threshold criterion 
   */
-  unsigned int thesh95(void);
+  unsigned int thresh95(void);
   //! Rotated values (scores)
   /*!
     Return calculated scores (coordinates in a new space) as vector. Matrix filled by rows.
