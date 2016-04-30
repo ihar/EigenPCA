@@ -93,7 +93,7 @@ int DoPCA(vector<float> &vec,
                 scores = pca->scores();
   vector<unsigned int> el_cols = pca->eliminated_columns();
   float         kaiser = pca->kaiser(), 
-                thresh95 = pca->thesh95();
+                thresh95 = pca->thresh95();
   unsigned int
                 ncols = pca->ncols(),
                 nrows = pca->nrows();
